@@ -34,6 +34,8 @@ if(isNaN(guess) || guess < min || guess > max){
   }
   // Check if won
   if(guess === winningNum){
+    // Game Over - won
+
     // Disable input
     guessInput.disabled = true;
     // Change border color
@@ -41,6 +43,22 @@ if(isNaN(guess) || guess < min || guess > max){
     // Set Message
     setMessage(`${WinningNum} is correct, YOU WIN!`, `green`);
   } else {
+    // Wrong number
+    guessesLeft -= 1;
+    if(guessesLeft===0){
+      // Game over - lost
+
+      // Disable input
+    guessInput.disabled = true;
+    // Change border color
+    guessInput.style.borderColor = `red`;
+    // Set Message
+    setMessage(`Game Over, you lost. The correct number was ${winningNum}`, `red`);
+    } else {
+      // Game Continues - answer wrong
+      setMessage(`${guess} is not correct, ${guessesLeft} guesses left.`)
+
+    }
 
   }
 });
