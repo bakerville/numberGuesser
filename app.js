@@ -45,18 +45,27 @@ if(isNaN(guess) || guess < min || guess > max){
   } else {
     // Wrong number
     guessesLeft -= 1;
+
     if(guessesLeft===0){
       // Game over - lost
 
       // Disable input
-    guessInput.disabled = true;
-    // Change border color
-    guessInput.style.borderColor = `red`;
-    // Set Message
-    setMessage(`Game Over, you lost. The correct number was ${winningNum}`, `red`);
+      guessInput.disabled = true;
+      // Change border color
+      guessInput.style.borderColor = `red`;
+      // Set Message
+      setMessage(`Game Over, you lost. The correct number was ${winningNum}`, `red`);
     } else {
       // Game Continues - answer wrong
-      setMessage(`${guess} is not correct, ${guessesLeft} guesses left.`)
+
+      // Change border color
+      guessInput.style.borderColor = `red`;
+
+      // Clear Input
+      guessInput.value =``;
+
+      // Tell user its the wrong number
+      setMessage(`${guess} is not correct, ${guessesLeft} guesses left`, `red`)
 
     }
 
