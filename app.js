@@ -10,12 +10,12 @@ GAME FUNCTION:
 // Game values
 let min = 1,
     max = 10,
-    winningNum = 2,
+    winningNum = getRandomNum(min, max),
     guessesLeft = 3;
-// UI Elements
 
+// UI Elements
 const game = document.querySelector('#game'),
-      minum = document.querySelector('.min-num'),
+      miNum = document.querySelector('.min-num'),
       maxNum = document.querySelector('.max-num'),
       guessBtn = document.querySelector('#guess-btn'),
       guessInput = document.querySelector('#guess-input')
@@ -24,6 +24,13 @@ const game = document.querySelector('#game'),
 // Assign UI min and max
 minNum.textContent = min;
 maxNum.textContent = max;
+
+// Play again event listener
+game.addEventListener('mousedown', function(e){
+  if(e.target.className === 'play-again'){
+    window.location.reload();
+  }
+});
 
 // Listen for guess
 guessBtn.addEventListener('click', function(){
@@ -49,14 +56,13 @@ if(isNaN(guess) || guess < min || guess > max){
       // Game Continues - answer wrong
 
       // Change border color
-      guessInput.style.borderColor = `red`;
+      guessInput.style.borderColor = 'red';
 
       // Clear Input
-      guessInput.value =``;
+      guessInput.value ='';
 
       // Tell user its the wrong number
-      setMessage(`${guess} is not correct, ${guessesLeft} guesses left`, `red`)
-
+      setMessage(`${guess} is not correct, ${guessesLeft} guesses left`, 'red');
     }
 
   }
@@ -66,6 +72,7 @@ if(isNaN(guess) || guess < min || guess > max){
 function gameOver(won, msg){
   let color;
   won === true ? color ='green' : color = 'red';
+
   // Disable input
   guessInput.disabled = true;
   // Change border color
@@ -74,8 +81,14 @@ function gameOver(won, msg){
   message.style.color = color;
   // Set Message
   setMessage(msg);
+  // Play Again?
+  guessBtn.value = 'Play Again?';
+  guessBtn.className += 'play-again';
 }
-
+// Get Random Number
+function getRandomNum(min, max){
+  return Math.floor(Math.random()*(max-min+1)+min);  
+}
 
 // Set Message
 function setMessage(msg, color){
